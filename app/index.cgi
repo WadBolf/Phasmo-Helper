@@ -1,5 +1,9 @@
 #! /usr/bin/env perl
 
+#
+# Phasmo Helper by Clare Jonsson 18/02/2021
+#
+
 use warnings;
 use strict;
 
@@ -53,14 +57,5 @@ my $template_vars = {
         $template->process('index.tpl', $template_vars)
                 || die "Template process failed: ", $template->error(), "\n";
 # TEMPLATE END ----------------------------------------------------------------
-
-
-
-#my $json = encode_json $returner;
-
-#print $json;
-
-
-#print "HELLO";
 
 
