@@ -1,0 +1,357 @@
+body{
+	background: black;
+	padding: 8px;
+	overflow-y:scroll;
+}
+
+hr{
+	background-color: #444;
+	border-style: solid;
+	border-width: 2px;
+}
+
+.container-header{
+        background: #222;
+        color: white;
+        padding-top: 8px;
+        border-radius: 16px 16px 0 0;
+        text-align: center;
+	font-size: 30px;
+}
+
+.ghostInfo{
+	clear: both;
+	font-size: 30px;
+}
+
+.ok-button-blue{
+	border-radius: 8px;
+	background: #448;
+	width: 400px;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 40px;
+	height: 60px;
+	margin-bottom: 10px;
+	margin-left: 4px;
+	box-shadow: 0 0 20px #447;
+}
+
+.ok-button{
+	border-radius: 8px;
+	background: #484;
+	width: 400px;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 40px;
+	height: 60px;
+	margin-bottom: 10px;
+	margin-left: 4px;
+	box-shadow: 0 0 20px #474;
+}
+
+.reset-button{
+	border-radius: 8px;
+	background: #844;
+	width: 400px;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 40px;
+	height: 60px;
+	margin-bottom: 10px;
+	margin-right: 4px;
+	box-shadow: 0 0 20px #744;
+}
+
+.evidence-left{
+	font-size: 20px;
+
+}
+
+.container-footer{
+        background: #222;
+        color: white;
+        padding-bottom: 8px;
+        border-radius: 0 0 16px 16px ;
+        text-align: center;
+	font-size: 30px;
+	margin-bottom: 8px;
+}
+
+
+.ghosts-info-container{
+	background: #222;
+	color: white;
+	padding: 8px 8px 8px 8px;
+	border-radius: 16px;	
+	text-align: center;
+	margin-bottom: 10px;
+	font-size: 30px;
+}
+
+.ghosts-info-header{
+	color: #9f9;
+}
+
+.container-body{
+	background: #222;
+	color: white;
+	padding: 0 8px 8px 8px;
+	border-radius: 0 0 16px 16px;	
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.container-body-square{
+	background: #222;
+	color: white;
+	padding: 0 8px 8px 8px;
+	text-align: center;
+}
+
+.container-body-square-info{
+	background: #222;
+	color: white;
+	padding: 0 8px 8px 8px;
+	text-align: center;
+	font-size: 40px;
+}
+
+.g-show{
+	padding: 10px;
+	background: black;
+	border-radius: 8px;
+	height: 150px;
+	width: 230px;
+	display: inline-block;
+	margin: 10px;
+	font-size: 40px;
+	box-shadow: 0 0 15px #644;
+}
+
+
+.g-found{
+	padding: 10px;
+	background: black;
+	border-radius: 8px;
+	height: 130px;
+	width: 480px;
+	display: inline-block;
+	margin: 30px;
+	cursor: pointer;
+	font-size: 70px;
+	box-shadow: 0 0 40px #744;
+	-webkit-animation: glowText 1s ease-in-out infinite alternate;
+	-moz-animation: glowText 1s ease-in-out infinite alternate;
+	animation: glowText 1s ease-in-out infinite alternate;
+}
+
+.e-select-small{
+	padding: 10px;
+	background: black;
+	border-radius: 16px;
+	height: 140px;
+	width: 160px;
+	display: inline-block;
+	margin: 10px;
+	cursor: pointer;
+	box-shadow: 0 0 20px #644;
+}
+
+.s-image-small{
+	height: 120px;
+	width: 140px;
+	border-radius: 16px;
+	background: #000;
+}
+
+.e-select{
+	padding: 10px;
+	background: black;
+	border-radius: 16px;
+	height: 240px;
+	width: 260px;
+	display: inline-block;
+	margin: 10px;
+	cursor: pointer;
+	box-shadow: 0 0 15px #454;
+}
+
+.s-image{
+	height: 220px;
+	width: 240px;
+	border-radius: 16px;
+	background: #000;
+}
+
+.tiny-image-container{
+	margin: 10px 0 0 10px ;
+	padding: 10px;
+}
+
+.tiny-image{
+	height: 60px;
+	width: 70px;
+	border-radius: 8px;
+	border-style: solid;
+	border-color: #113;
+	border-width: 4px;
+	margin-top: 5px;
+}
+
+.evidence-left{
+	text-align: center;
+}
+
+.objectives-edit-container{
+	background: #222;
+	color: white;
+        margin-bottom: 8px;
+        border-radius: 16px;
+	padding: 10px 16px 10px 16px;
+	font-size: 30px;
+	text-align: center;
+}
+
+.objectives-container{
+	background: #222;
+	color: white;
+        margin-bottom: 8px;
+        border-radius: 16px;
+	padding: 10px 16px 10px 16px;
+	font-size: 30px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.selectionOFF{
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 8px;
+	border-color: white;
+	background: #333;
+	font-size: 40px;
+	text-align: center;
+	padding: 4px;
+	display: inline-block;
+	width: 200px;
+	color: white;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	cursor: pointer;
+	box-shadow: 0 0 20px #444;
+}
+
+.selectionON{
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 8px;
+	border-color: white;
+	background: #9f9;
+	font-size: 40px;
+	text-align: center;
+	padding: 4px;
+	display: inline-block;
+	width: 200px;
+	color: black;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	cursor: pointer;
+	box-shadow: 0 0 20px #494;
+}
+
+.objectivesmall{
+	border-radius: 8px;
+	background: #337;
+	font-size: 30px;
+	text-align: center;
+	padding: 4px;
+	display: inline-block;
+	width: 160px;
+	color: white;
+	margin-right: 20px;
+	margin-bottom: 9px;
+	margin-top: 9px;
+	cursor: pointer;
+	box-shadow: 0 0 20px #447;
+}
+
+.ghostnamesmall{
+	border-radius: 8px;
+	background: #733;
+	font-size: 30px;
+	text-align: center;
+	padding: 4px;
+	display: inline-block;
+	width: 250px;
+	color: white;
+	margin-right: 20px;
+	margin-bottom: 9px;
+	margin-top: 9px;
+	cursor: pointer;
+	box-shadow: 0 0 20px #744;
+}
+
+.ghostNameInput{
+	background: #333;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #eee;
+	border-radius: 16px;
+	color: white;
+	padding: 8px;
+	text-align: center;
+	box-shadow: 0 0 20px #474;
+	width: 80%;
+}
+
+.show-all-ghosts-button-container
+{
+	padding-top: 16px;	
+	padding-bottom: 8px;	
+}
+
+.info-text{
+	border-style: solid;
+	border-width: 3px;
+	border-radius: 8px;
+	border-color: #343;
+	padding: 12px;
+	margin-bottom: 40px;
+	margin-top: 22px;
+	margin-left: 20px;
+	margin-right: 20px;
+	box-shadow: 10px 10px 10px black;
+	background: black;
+	padding-bottom: 16px;
+}
+
+@-webkit-keyframes glowText {
+  from {
+    text-shadow: 0 0 0px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+    box-shadow: 0 0 0px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    box-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
+}
+
+::-webkit-scrollbar {
+        width: 20px;
+}
+
+::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px #000;
+
+        border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px #666;
+        background: #333;
+}
+

@@ -1,0 +1,202 @@
+CREATE TABLE Ghosts (
+	ID INTEGER PRIMARY KEY AUTOINCREMENT,
+	ghost_name TEXT,
+	ghost_info TEXT,
+	items TEXT
+);
+
+CREATE TABLE  Evidence (
+	ID INTEGER PRIMARY KEY AUTOINCREMENT,
+	item_name TEXT,
+	item_code TEXT,
+	item_info TEXT,
+	item_picture TEXT
+);
+
+
+CREATE TABLE  Objectives (
+	ID INTEGER PRIMARY KEY AUTOINCREMENT,
+	objective_description TEXT,
+	item_code TEXT
+);
+
+INSERT INTO Objectives (objective_description, item_code)
+	VALUES (
+		"Detect EMF 2 or above",
+		"EMF"
+	);
+
+INSERT INTO Objectives (objective_description, item_code)
+	VALUES (
+		"Detect temperature below 10 degrees",
+		"Temps"
+	);
+
+INSERT INTO Objectives (objective_description, item_code)
+	VALUES (
+		"Capture a photo of dirty water",
+		"D-Water"
+	);
+
+INSERT INTO Objectives (objective_description, item_code)
+	VALUES (
+		"Capture a photo of the Ghost",
+		"G-Photo"
+	);
+
+INSERT INTO Objectives (objective_description, item_code)
+	VALUES (
+		"Detect Ghost with the motion sensor",
+		"Motion"
+	);
+
+INSERT INTO Objectives (objective_description, item_code)
+	VALUES (
+		"Prevent ghost from hunting with a crucifix",
+		"Crucifix"
+	);
+
+INSERT INTO Objectives (objective_description, item_code)
+	VALUES (
+		"Cleanse the ghost area with a smudge stick",
+		"Smudge"
+	);
+
+INSERT INTO Objectives (objective_description, item_code)
+	VALUES (
+		"Get the ghost to walk through salt",
+		"Salt"
+	);
+
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Phantom",
+		"Temps/EMF/Orbs",
+		"Drains sanity x2 when viewing (0.4%). Taking its picture will make it invisible, pictures will tag as Ghost but the Phantom will not be visible in the picture. Phantoms blink slower (1s-2s instead of 0.3s-1s) during a hunt."
+	);
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Banshee",
+		"Temps/EMF/Prints",
+		"Targets one person at a time (First living player) and ignores 50% sanity thresholds for hunts, so it can start a hunt as soon as you enter the building. The crucifix range is increased from 3m to 5m."
+	);
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Mare",
+		"Temps/Orbs/SP-Box",
+		"Aggressive in the dark and loves to turn the lights/breaker off, usually does not turn lights back on. Only attacks below 40% sanity when lights are on. Roams a lot."
+	);
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Yurie",
+		"Temps/Orbs/Writing",
+		"Double sanity drain when viewing (0.4% instead of 0.2%). Smudging will prevent it from wandering for 90 seconds. Roams a lot."
+	);
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Demon",
+		"Temps/SP-Box/Writing",
+		"Highly aggressive, it will hunt way more than other ghosts and early crucifix use is highly recommended. Ouija Board will not drain sanity."
+	);
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Wraith",
+		"Temps/SP-Box/Prints",
+		"Has the ability of flight and can see through doors and move through walls. Salt is toxic to a Wraith and they leave no salt footprints. Can teleport close to a player."
+	);
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Jinn",
+		"EMF/Orbs/SP-Box",
+		"Moves fast when further than 4m away, turning off breaker stops this. Doesn’t normally purposely turn off breaker but it loves playing with electronics/lights, so it may accidentally trip the breaker."
+	);
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Shade",
+		"EMF/Orbs/Writing",
+		"A 'shy ghost' and will not usually hunt if there are multiple people nearby. Harder to find evidence while in groups but very active for a single person with low sanity."
+	);
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Oni",
+		"EMF/SP-Box/Writing",
+		"+30 activity with multiple people, so may reveal itself early. Wanders a lot near ghost room so may create red herrings. Throws objects at speed without draining sanity."
+	);
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Revenant",
+		"EMF/Writing/Prints", 
+		"Can switch target mid-hunt. Hiding from it will cause it to move slowly, but it will travel twice as fast as players if they are in sight."
+	);
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Poltergeist", 
+		"Orbs/SP-Box/Prints",
+		"Very active and can manipulate multiple objects at the same time, it is quite ineffective in empty rooms. Sanity drops when viewing moving objects at the rate of NumberOfObjects * 2. Roams a lot."
+	);
+
+INSERT INTO Ghosts (ghost_name, items, Ghost_info) 
+	VALUES (
+		"Spirit",
+		"SP-Box/Writing/Prints", 
+		"No special abilities. Smudging prevents it from hunting for 180 seconds instead of the usual 90 seconds."
+	);
+
+INSERT INTO Evidence (item_name, item_code, item_picture, item_info) 
+	VALUES (
+		"Ghost Orbs", 
+		"Orbs",
+		"Orbs.png", 
+		""
+	);
+
+INSERT INTO Evidence (item_name, item_code, item_picture, item_info) 
+	VALUES (
+		"Spirit Box", 
+		"SP-Box",
+		"SP-Box.png", 
+		""
+	);
+
+INSERT INTO Evidence (item_name, item_code, item_picture, item_info) 
+	VALUES (
+		"Ghost Writing", 
+		"Writing", 
+		"Writing.png", 
+		""
+	);
+
+INSERT INTO Evidence (item_name, item_code, item_picture, item_info) 
+	VALUES (
+		"Finger Prints", 
+		"Prints", 
+		"Prints.png", 
+		""
+	);
+
+INSERT INTO Evidence (item_name, item_code, item_picture, item_info) 
+	VALUES (
+		"EMF Level 5", 
+		"EMF", 
+		"EMF.png", 
+		""
+	);
+
+INSERT INTO Evidence (item_name, item_code, item_picture, item_info) 
+	VALUES (
+		"Freezing Temperatures", 
+		"Temps", 
+		"Temps.png", 
+		""
+	);

@@ -1,0 +1,205 @@
+package Phasmo;
+
+use warnings;
+use strict;
+
+use lib "/var/www/phasmo/app/lib";
+use lib "/var/www/shared";
+use DBI;
+use MIME::Base64;
+use Data::Dumper;
+use HTTP::Request::Common qw{ POST };
+use CGI;
+use JSON;
+
+
+sub new
+{
+        my ($self, $dbfile) = @_;
+        $self = {
+                db => undef,
+                err => "No Error",
+        };
+
+        bless $self;
+
+        return "database file not found"
+                        unless (-e $dbfile);
+                $self->{db} = DBI->connect("dbi:SQLite:dbname=$dbfile","","", {
+                        AutoCommit => 1,
+                        sqlite_use_immediate_transaction => 1,
+                });
+                return "Failed to connect to database: $DBI::errstr"
+                        unless (defined($self->{db}));
+
+        return $self;
+}
+
+sub err
+{
+        my ($self) = @_;
+        return $self->{err};
+}
+
+sub getData
+{
+        my ( $self, @searchFor ) = @_;
+
+
+	my $returner = {};
+
+	my @searchForDB;
+
+	my $totalSearchFor = 0;
+
+	$returner->{itemsFound} = [];
+
+	foreach my $item( @searchFor )
+	{
+		push ( @searchForDB, "%" . $item . "%" );
+
+		if ( $item ne "" )
+		{
+			$totalSearchFor ++;
+			push ( @{$returner->{itemsFound}}, getEvidence( $self, $item ) );
+		}
+	}
+
+
+	$returner->{totalItemsFound} = $totalSearchFor;
+
+	#$returner->{itemsFound} = \@searchFor;
+
+	my $q = $self->{db}->prepare(q{
+		        SELECT * FROM Ghosts WHERE items LIKE ? AND items LIKE ? AND items LIKE ? ORDER BY ghost_name ASC;
+		});
+	if ( !defined($q) || !$q->execute($searchForDB[0], $searchForDB[1], $searchForDB[2] ) )
+	{
+		$self->{err} = $DBI::errstr;
+		return undef;
+	}
+	while( defined ( my $row = $q->fetchrow_hashref ) )
+	{
+		my @evidenceRequired = split("/", $row->{items});
+		my @result;
+		foreach my $e ( @evidenceRequired)
+		{
+			my $found = 0;
+			foreach my $s (@searchFor)
+			{
+				if ($s eq $e) {	$found = 1; }
+			}
+
+			if (!$found) { push (@result, getEvidence($self, $e) ); }
+		}
+		$row->{itemsRequired} =  \@result;
+		push ( @{ $returner->{ghosts} }, $row );
+	}
+
+
+	# Iterate through above results for items left to find.
+	my $q2 = $self->{db}->prepare(q{
+                        SELECT * FROM Ghosts ORDER BY ghost_name ASC;
+                });
+        if ( !defined($q2) || !$q2->execute() )
+        {
+                $self->{err} = $DBI::errstr;
+                return undef;
+        }
+        while( defined ( my $row = $q2->fetchrow_hashref ) )
+        {
+                my @evidenceRequired = split("/", $row->{items});
+                my @result;
+                foreach my $e ( @evidenceRequired)
+                {
+                        my $found = 0;
+                        foreach my $s (@searchFor)
+                        {
+                                if ($s eq $e) { $found = 1; }
+                        }
+
+                        if (!$found) { push (@result, getEvidence($self, $e) ); }
+                }
+                $row->{itemsRequired} =  \@result;
+                push ( @{ $returner->{allGhosts} }, $row );
+        }
+
+
+
+	$q = $self->{db}->prepare(q{
+	                SELECT * FROM Evidence ORDER BY item_code ASC;
+	        });
+	if ( !defined($q) || !$q->execute() )
+	{
+	        $self->{err} = $DBI::errstr;
+	        return undef;
+	}
+
+	my @allItemsLeft;
+
+	while( defined ( my $row = $q->fetchrow_hashref ) )
+	{
+		my $found = 0;
+		foreach my $ghost  ( @{ $returner->{ghosts} } )
+		{
+
+			foreach my $item ( @{$ghost->{itemsRequired}} )
+			{
+				if ( $item->{item_code} eq $row->{item_code} )
+				{
+					$found = 1;
+				}
+			}
+		}		
+		
+		if ( $found )
+		{
+			push( @allItemsLeft, getEvidence($self, $row->{item_code}) );
+		}
+	}
+	$returner->{itemsLeft} = \@allItemsLeft;
+
+        $q = $self->{db}->prepare(q{
+                        SELECT * FROM Objectives ORDER BY item_code ASC;
+                });
+        if ( !defined($q) || !$q->execute() )
+        {
+                $self->{err} = $DBI::errstr;
+                return undef;
+        }
+        my @objectives;
+        while( defined ( my $row = $q->fetchrow_hashref ) )
+        {
+		push( @objectives, $row );
+        }
+
+        $returner->{objectives} = \@objectives;
+
+	return $returner;
+}
+
+sub getEvidence
+{
+        my ( $self, $getEv ) = @_;
+
+	if ( defined( $getEv ))
+	{
+		my $q = $self->{db}->prepare(q{
+			SELECT * FROM Evidence where item_code = ?;
+		});
+
+		if ( !defined($q) || !$q->execute( $getEv ) )
+		{
+		        $self->{err} = $DBI::errstr;
+		        return undef;
+		}
+		while( defined ( my $row = $q->fetchrow_hashref ) )
+		{
+		        return $row;
+		}
+	}
+}
+
+
+
+1;
