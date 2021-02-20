@@ -1,5 +1,5 @@
 # Phasmo-Helper
-A web app used to aid Ghost Identification and missions in the game Phasmophobia
+A web app used to aid ghost identification and missions in the game Phasmophobia. 
 
 ## Contents
 * [Technologies](#technologies)
