@@ -10,7 +10,6 @@ A web app used to aid ghost identification and missions in the game Phasmophobia
 ## Technologies
 This porject was created with:
 * Perl version: 5.28.1
-* Javascript: Browser Dependant
 * JQuery: 3.5.1
 
 ## Setup
