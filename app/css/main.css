@@ -11,12 +11,6 @@ body{
 	text-align: left;
 }
 
-hr{
-	background-color: #444;
-	border-style: solid;
-	border-width: 2px;
-}
-
 .container-header{
         background: #222;
         color: white;
@@ -29,7 +23,11 @@ hr{
 .ghostInfo{
 	clear: both;
 	font-size: 30px;
-}
+	margin: 20px;
+	background: #191919;
+	padding: 20px;
+	border-radius: 16px;
+}	
 
 .ok-button-blue{
 	border-radius: 8px;
@@ -38,7 +36,7 @@ hr{
 	cursor: pointer;
 	display: inline-block;
 	font-size: 40px;
-	height: 60px;
+	height: 64px;
 	margin-bottom: 10px;
 	margin-left: 4px;
 	box-shadow: 0 0 20px #447;
@@ -51,8 +49,9 @@ hr{
 	cursor: pointer;
 	display: inline-block;
 	font-size: 40px;
-	height: 60px;
+	height: 64px;
 	margin-bottom: 10px;
+	margin-right: 4px;
 	margin-left: 4px;
 	box-shadow: 0 0 20px #474;
 }
@@ -64,9 +63,10 @@ hr{
 	cursor: pointer;
 	display: inline-block;
 	font-size: 40px;
-	height: 60px;
+	height: 64px;
 	margin-bottom: 10px;
 	margin-right: 4px;
+	margin-left: 4px;
 	box-shadow: 0 0 20px #744;
 }
 
@@ -98,6 +98,14 @@ hr{
 
 .ghosts-info-header{
 	color: #9f9;
+	font-size: 40px;
+}
+
+.ghosts-info-items{
+	margin-top: 15px;
+	color: #9f9;
+	font-size: 25px;
+
 }
 
 .container-body{
@@ -324,18 +332,16 @@ hr{
 }
 
 .info-text{
-	border-style: solid;
-	border-width: 3px;
+	box-shadow: 0 0 10px #232;
 	border-radius: 8px;
-	border-color: #343;
 	padding: 20px;
 	margin-bottom: 40px;
 	margin-top: 22px;
 	margin-left: 20px;
 	margin-right: 20px;
-	box-shadow: 10px 10px 10px black;
-	background: black;
+	background: #101210;
 	padding-bottom: 16px;
+	font-size: 25px;
 }
 
 @-webkit-keyframes glowText {

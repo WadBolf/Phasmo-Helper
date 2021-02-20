@@ -6,7 +6,7 @@
                 <script src="js/jquery-3.5.1.min.js"></script>
                 <link rel="shortcut icon" href="favicon.ico">
         </head>
-        <body style="background: #000;">
+        <body>
 		<div
 			id="objectives-display" 
 			class="objectives-container"
@@ -50,7 +50,7 @@
 			</div>
 		</div>
 		<div class= "ghosts-info-container" id="found-ghosts-info-list" style="display:none">
-			GHOSTS INFO
+			ALL GHOSTS INFO
 			<div id="found-ghost-info" >
 			</div>
 		</div>
@@ -253,7 +253,7 @@
                 }
                 else if (eSelect == "" || totalFound ==0) 
 		{
-			eSelect +='<div class="show-all-ghosts-button-container"><span class="ok-button-blue" onClick="showAllGhosts();">Toggle Ghost Info</div>';
+			eSelect +='<div class="show-all-ghosts-button-container"><span class="ok-button-blue" onClick="showAllGhosts();">Toggle Ghosts Info</div>';
                         $('#select-evidences').show(200);
 		}
 		else
@@ -329,7 +329,7 @@
 
                                 if (totalFound == 3)
                                 {
-                                        eSelect += '<div class="ghostInfo" ><hr>' + ghosts[i]["ghost_info"] + '<hr></div>';
+                                        eSelect += '<div class="ghostInfo" >' + ghosts[i]["ghost_info"] + '</div>';
                                 }
                         }
                 }
@@ -367,7 +367,7 @@
 			htmlout += '<div class="info-text">';
 			htmlout += '<div class="ghosts-info-header">' + ghosts[n]["ghost_name"] + '</div>';
 			htmlout += '<div>' + ghosts[n]["ghost_info"]  + '</div>';
-			htmlout += '<div><br/>' + ghosts[n]["items"]  + '</div>';
+			htmlout += '<div class="ghosts-info-items">' + ghosts[n]["items"]  + '</div>';
 			htmlout += '</div>';
 		}
                 document.getElementById('found-ghost-info').innerHTML = htmlout;
@@ -383,7 +383,7 @@
 			htmlout += '<div class="info-text">';
 			htmlout += '<div class="ghosts-info-header">' + ghosts[n]["ghost_name"] + '</div>';
 			htmlout += '<div>' + ghosts[n]["ghost_info"]  + '</div>';
-			htmlout += '<div><br/>' + ghosts[n]["items"]  + '</div>';
+			htmlout += '<div class="ghosts-info-items">' + ghosts[n]["items"]  + '</div>';
 			htmlout += '</div>';
 		}
 
