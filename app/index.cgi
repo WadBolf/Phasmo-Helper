@@ -1,9 +1,7 @@
 #! /usr/bin/env perl
-#
-#
+
 #
 # Phasmo Helper by Clare Jonsson 18/02/2021
-#
 #
 
 use warnings;
