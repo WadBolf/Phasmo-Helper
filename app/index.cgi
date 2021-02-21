@@ -6,32 +6,11 @@
 # Thank you.
 #
 
-use warnings;
-use strict;
-
-# SITE LOCATION----------------------------------------------------------------
-
-	# Site Location (Change this path to match your site location)
-
-	my $siteLocation; BEGIN { $siteLocation = "/var/www/phasmo"; };
-
-# SITE LOCATION----------------------------------------------------------------
-
-
-# PATHS -----------------------------------------------------------------------
-
-	# Normally you won't have to change anything here as the site path 
-	# is defined above.
-
-	use lib "$siteLocation/app/lib";
-	my $db = "$siteLocation/app/database/phasmo.sqlite";
-	my $templatepath = "$siteLocation/app/template";
-
-# PATHS -----------------------------------------------------------------------
-
 # DEPENDANCIES AND LIBS -------------------------------------------------------
 
-	use Phasmo;
+	use warnings;
+	use strict;
+	use Cwd qw(cwd);
 	use CGI qw(:all);
 	use CGI::Session;
 	use Template qw(:template );
@@ -41,6 +20,31 @@ use strict;
 	use JSON;
 
 # DEPENDANCIES AND LIBS -------------------------------------------------------
+
+
+# SITE LOCATION----------------------------------------------------------------
+
+	# The following within the BEGIN block is used in order to dynamically set use lib location:
+	my $site_dir;
+	my $lib_dir;
+	my $siteLocation;
+	BEGIN
+	{
+		$site_dir = cwd;		# Get surrent working directory
+		$site_dir =~ s/htdocs//;	# remove htdocs to get the stire directory
+		$site_dir = $site_dir . "app";	# Add this for index.cgi, not for ajax.
+		$lib_dir = $site_dir . "/lib";	# add "wallet/lib" to create the lib directory
+		eval "use lib('$lib_dir')";	# use lib directory
+	}
+
+	# Add Phasmo Library
+	use Phasmo;
+
+	# Set database and template-path
+	my $db = "$site_dir/database/phasmo.sqlite";
+	my $templatepath = "$site_dir/template";
+
+# SITE LOCATION----------------------------------------------------------------
 
 
 # CGI Setup -------------------------------------------------------------------

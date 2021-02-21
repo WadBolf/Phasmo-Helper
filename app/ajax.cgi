@@ -3,8 +3,7 @@
 use warnings;
 use strict;
 
-use lib "/var/www/phasmo/app/lib";
-use Phasmo;
+use Cwd qw(cwd);
 use CGI qw(:all);
 use CGI::Session;
 use Template qw(:template );
@@ -12,13 +11,38 @@ use Data::Dumper;
 use DBI;
 use JSON;
 
+# SITE LOCATION----------------------------------------------------------------
+
+        # The following within the BEGIN block is used in order to dynamically set use lib location:
+        my $site_dir;
+        my $lib_dir;
+        my $siteLocation;
+        BEGIN
+        {
+                $site_dir = cwd;		# Get surrent working directory
+                $site_dir =~ s/htdocs//;	# remove htdocs to get the stire directory
+                $site_dir = $site_dir . "app";	# Add this for index.cgi, not for ajax.
+                $lib_dir = $site_dir . "/lib";	# add "wallet/lib" to create the lib directory
+                eval "use lib('$lib_dir')";	# use lib directory
+        }
+
+        # Add Phasmo Library
+        use Phasmo;
+
+        # Set database and template-path
+        my $db = "$site_dir/database/phasmo.sqlite";
+        my $templatepath = "$site_dir/template";
+
+# SITE LOCATION----------------------------------------------------------------
+
+
 # CGI Setup
 my $cgi = CGI->new;
 my $session = new CGI::Session(undef, $cgi);
 my $cookie = $cgi->cookie(CGISESSID => $session->id);
 print $cgi->header( -cookie=>$cookie );
 
-my $db = "/var/www/phasmo/app/database/phasmo.sqlite";
+#my $db = "/var/www/phasmo/app/database/phasmo.sqlite";
 my $phasmo = new Phasmo($db) or die "DB NOT FOUND";
 
 
