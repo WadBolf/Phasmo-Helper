@@ -54,32 +54,23 @@
 			<div id="found-ghost-info" >
 			</div>
 		</div>
-		<div id="ghost-info" style="display:none">
-			<div class="container-header" id="ghost-info-header" >
-			</div>
-			<div class="container-body-square-info" id="ghost-info-text" >
-			</div>
-			<div class="container-footer" id="ghost-info-footer" >
-				<span class="reset-button" onClick="cancelInfo();">CLOSE</span>
-			</div>
-		</div>
         </body>
 
 </html>
 
 
 <script>
+	// Setup runtime variables
 	var firstLoad = 1;
 	var fullData;
 	var getData = new Array(3);	
 	getData[0] = "";
 	getData[1] = "";
 	getData[2] = "";
-
 	var ghostName = "";
-	
 	var totalObjectives = 0;
 
+	// AJAX funcition to get data via ajax.cgi.
 	function get_data()
         {
 		var jsonSearch = JSON.stringify(getData);
@@ -109,13 +100,14 @@
                         },
                         error: function (jqXHR, textStatus, errorThrown)
                         {
-                                //show_ajax_error();
+                                // AJAX errored, show a crude JavaScript
+				// error alert, I'll clean this up one day!
 				alert("ERROR");
                         }
                 })
         }
 
-
+	// Item clicked, so update fulldata, sort the array and get the updated list.
 	function selectEvidence(item)
 	{
 		closeEditObjectives();
@@ -124,6 +116,8 @@
 		get_data();
 	}
 
+
+	// Clear all objectives and ghost name.
 	function clearObjectives()
 	{
 		var objectives = fullData["objectives"];
@@ -144,7 +138,8 @@
 
 	}
 
-
+	// Reset all objectives, ghost name and evidence found,
+	// then get data using AJAX and show editObjectives panel
 	function resetPressed()
 	{
 		for (var i = 0; i < 3; i++)
@@ -174,11 +169,8 @@
 		editObjectives();	
 	}
 
-	function closeInfoPressed()
-	{
-		cancelInfo();
-	}
-
+	// Remove evidence item from evidence found, sort array and
+	// get data using AJAX.
 	function deSelectEvidence(item)
 	{
 		closeEditObjectives();
@@ -193,6 +185,9 @@
 		get_data();
 	}
 
+	// Clean up getData array placing all evidence
+	// found at array top. There's probably a better
+	// way to do this I'm sure!
 	function sortData()
 	{
 		var tempData = new Array(3);
@@ -218,10 +213,17 @@
 		}
 	}
 
-
+	// Update the whole page, populating the following panels:
+	//	Select Evidence
+	//	Found Evidence
+	//	Found Ghosts
 	function displayPage()
 	{
+		// Logging full data to console for dev purposes,
+		// You can safely cooment this out if it bothers you.
 		console.log(fullData);
+		
+		
 		populateFoundGhosts( );
 		populateFoundEvidence( );
 		populateSelectEvidence( );
@@ -232,7 +234,7 @@
 		}
 	}
 
-
+	// Populate the select Evidence panel.
         function populateSelectEvidence()
         {
 		var evidence = fullData["itemsLeft"];
@@ -266,7 +268,7 @@
         }
 
 
-	
+	// Populate the Found Evidence panel.
 	function populateFoundEvidence()
         {
 		var evidence = fullData["itemsFound"];
@@ -297,7 +299,7 @@
         }
 
 
-
+	// Populate the Found Ghosts panel
         function populateFoundGhosts(ghosts, totalFound)
         {	
 		var ghosts = fullData["ghosts"];
@@ -373,7 +375,8 @@
                 document.getElementById('found-ghost-info').innerHTML = htmlout;
         }
 
-
+	
+	// Populate and show the Show all ghsots panel.
 	function showAllGhosts()
 	{
 		var ghosts = fullData["allGhosts"];
@@ -392,6 +395,7 @@
 	}
 
 
+	//wipe and hide the Show all ghosts panel.
 	function hideAllGhosts()
 	{
                 document.getElementById('found-ghost-info').innerHTML = "";
@@ -399,6 +403,7 @@
 	}
 
 
+	// Populate the objectives panel.
 	function populateObjectives()
 	{
 		var objectives = fullData["objectives"];
@@ -413,6 +418,8 @@
 		document.getElementById('objectives-edit-list').innerHTML = htmlout;
 	}
 
+
+	// Toggle the evidence selection button
 	function toggleSelection(selectionID)
 	{
 		var spanID = "#select" + selectionID;
@@ -432,47 +439,8 @@
 		}
 	}
 
-	function showGhostInfo(ghostID)
-	{
-		counter = 30;
-		countdown();
 
-		$("#ghost-info-header").html( fullData["ghosts"][ghostID]["ghost_name"] );
-		$("#ghost-info-text").html( fullData["ghosts"][ghostID]["ghost_info"] );
-		$("#ghost-info").show(100);
-		$("#found-ghosts").hide(100);
-		$('#found-evidences').hide(100);
-		$('#select-evidences').hide(100);
-		//alert( fullData["ghosts"][ghostID]["ghost_info"]);
-	}
-
-	var counter = -1;
-	function countdown()
-	{
-		if (counter > -1)
-		{
-			counter--;
-			if (counter == 0)
-			{	
-				cancelInfo();
-			}
-		
-			setTimeout(function() { countdown(); }, 1000);
-		}
-		
-	}
-
-
-
-	function cancelInfo()
-	{
-		$("#ghost-info").hide(100);
-                $("#found-ghosts").show(100);
-                $('#found-evidences').show(100);
-                $('#select-evidences').show(100);
-		counter = -1;
-	}
-
+	// Show the Edit Objectives panel.
 	function editObjectives()
 	{
 		$("#objectives-edit").show(200);
@@ -480,6 +448,8 @@
 		$('#ghostNameInput').focus();
 	}
 
+
+	// Update objectives mini panel and hide Edit Objectives panel.
 	function closeEditObjectives()
 	{
 		var objectives = fullData["objectives"];
@@ -518,8 +488,8 @@
 		$("#objectives-display").show(200);
 	}
 
+	// APPLICATION INITIALISE!
+	// Get data via AJAX and then show the edit objectives panel
 	get_data();
 	editObjectives();
 </script>
-
-[% inf %]
