@@ -32,8 +32,8 @@
 	{
 		$site_dir = cwd;		# Get surrent working directory
 		$site_dir =~ s/htdocs//;	# remove htdocs to get the stire directory
-		$site_dir = $site_dir . "app";	# Add this for index.cgi, not for ajax.
-		$lib_dir = $site_dir . "/lib";	# add "wallet/lib" to create the lib directory
+		$site_dir = $site_dir . "app";	# Add app folder
+		$lib_dir = $site_dir . "/lib";	# add "/lib" to create the lib directory
 		eval "use lib('$lib_dir')";	# use lib directory
 	}
 
