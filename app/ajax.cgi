@@ -13,7 +13,7 @@ use JSON;
 
 # SITE LOCATION----------------------------------------------------------------
 
-        # The following within the BEGIN block is used in order to dynamically set use lib location:
+        # The following within the BEGIN block is used in order to dynamically set the lib location:
         my $site_dir;
         my $lib_dir;
         my $siteLocation;
