@@ -376,7 +376,7 @@
         }
 
 	
-	// Populate and show the Show all ghsots panel.
+	// Populate and show the Show all ghosts panel.
 	function showAllGhosts()
 	{
 		var ghosts = fullData["allGhosts"];
