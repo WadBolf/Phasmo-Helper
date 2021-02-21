@@ -63,7 +63,8 @@
 # TEMPLATE START --------------------------------------------------------------
 
         # Launch the template.
-	# We're not sending any variables to template toolkit as it's handled by AJAX
+	# We're not sending any variables to template toolkit 
+	# as the dynamic content is handled by AJAX.
         my $template = Template->new({
                 RELATIVE => 1,
                 INCLUDE_PATH => $templatepath,
