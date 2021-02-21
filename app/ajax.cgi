@@ -42,9 +42,7 @@ my $session = new CGI::Session(undef, $cgi);
 my $cookie = $cgi->cookie(CGISESSID => $session->id);
 print $cgi->header( -cookie=>$cookie );
 
-#my $db = "/var/www/phasmo/app/database/phasmo.sqlite";
 my $phasmo = new Phasmo($db) or die "DB NOT FOUND";
-
 
 # Setup Dispatch functions ------------------------------------------------------------
 my $dispatch = {
