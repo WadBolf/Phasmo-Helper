@@ -3,8 +3,6 @@ package Phasmo;
 use warnings;
 use strict;
 
-use lib "/var/www/phasmo/app/lib";
-use lib "/var/www/shared";
 use DBI;
 use MIME::Base64;
 use Data::Dumper;
