@@ -16,4 +16,4 @@ This project was created with:
 To setup and run you will require a webserver running Perl. Clone this repo and update the path to the database and libraries in the index.cgi file. I will be adding a config file for this at later date.
 
 ## Demo
-You may see a demonstration of this project running at https://phasmo-helper.retrotech.one 
+You may see a demonstration of this project running at [phasmo-helper.retrotech.one](https://phasmo-helper.retrotech.one)
