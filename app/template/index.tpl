@@ -339,12 +339,21 @@
 		if ( totalFound > 0 && totalFound < 3)
                 {
                         eSelect += '<br><br>';
+			document.title = 'Phasmo Helper';
                 }
+
+		if (totalFound == 3)
+		{
+			document.title = ghosts[0]["ghost_name"] + " - Phasmo Helper";
+		
+		}
+
                 if ( totalFound == 0 )
                 {
                         eSelect = "NONE";
                         $("#found-ghosts-list").hide(500);
                         $("#found-ghosts-info-list").hide(500);
+			document.title = 'Phasmo Helper';
                 }
                 else
                 {
