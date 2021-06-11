@@ -2,7 +2,11 @@
 <html>
         <head>
 		<title>Phasmo Helper</title>
-                <link rel="stylesheet" href="css/main.css">
+		[% IF DeviceType  == "Desktop" %]
+                	<link rel="stylesheet" href="css/main-sm.css">
+		[% ELSE %]
+                	<link rel="stylesheet" href="css/main.css">
+		[% END %]
                 <script src="js/jquery-3.5.1.min.js"></script>
                 <link rel="shortcut icon" href="favicon.ico">
         </head>
@@ -501,4 +505,8 @@
 	// Get data via AJAX and then show the edit objectives panel
 	get_data();
 	editObjectives();
+
 </script>
+<div style="text-align: center; color: black; ">HOST ADDRESS: [% RemoteAddress %]</div>
+
+

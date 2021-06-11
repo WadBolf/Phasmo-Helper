@@ -83,7 +83,7 @@ sub GETDATA
 	my $data = decode_json( $params->{getData} );
 	
 	my $returner = $phasmo->getData( @{$data} );
-
+	$returner->{IP} = $ENV{REMOTE_ADDR};
 
 	my $json = encode_json( $returner );
 	print $json;
