@@ -67,6 +67,7 @@
 	// Setup runtime variables
 	var firstLoad = 1;
 	var fullData;
+	var totalEliminated = 20;
 	var getData = new Array(3);	
 	getData[0] = "";
 	getData[1] = "";
@@ -77,13 +78,25 @@
 	// AJAX funcition to get data via ajax.cgi.
 	function get_data()
         {
-		var jsonSearch = JSON.stringify(getData);
+		var eliminated = "";
+		if (typeof fullData != 'undefined')
+		{
+			eliminated = fullData["ItemsEliminated"]	
+		}
 
+		var allData = {
+			data: getData,
+			elim: eliminated
+		};	
+		
+
+		var jsonSearch = JSON.stringify(allData);
+
+		//console.log(getData);
                 var formData = {
                         func:"getdata",
-			getdata:jsonSearch
+			getdata:jsonSearch,
                 };
-
                 $.ajax({
                         url : "ajax.cgi",
                         type: "POST",
@@ -97,10 +110,9 @@
                                 }
                                 else
                                 {
-					fullData =  JSON.parse(data);
+					fullData 	=  JSON.parse(data);
 					displayPage( );
                                 }
-
                         },
                         error: function (jqXHR, textStatus, errorThrown)
                         {
@@ -118,6 +130,18 @@
 		getData[fullData["totalItemsFound"]] = item;
 		sortData();
 		get_data();
+	}
+
+	function eliminateEvidence(item)
+	{
+		fullData["ItemsEliminated"][item] = 1;
+		displayPage();
+	}
+
+	function unEliminateEvidence(item)
+	{
+		fullData["ItemsEliminated"][item] = 0;
+		displayPage();
 	}
 
 
@@ -151,6 +175,8 @@
 			getData[i] = "";
 		}
 
+		fullData["ItemsEliminated"] = "";
+
 		var objectives = fullData["objectives"];
 		for (var i = 0; i < objectives.length; i++)
                 {
@@ -166,8 +192,6 @@
 
 		totalObjectives = 0;
 
-                //$("#objectives-edit").show(200);
-                //$("#objectives-display").hide(200);
 
 		get_data();
 		editObjectives();	
@@ -227,7 +251,6 @@
 		// You can safely cooment this out if it bothers you.
 		console.log(fullData);
 		
-		
 		populateFoundGhosts( );
 		populateFoundEvidence( );
 		populateSelectEvidence( );
@@ -246,10 +269,22 @@
                 var eSelect = "";
                 for (var i=0; i < evidence.length; i++)
                 {
-                                eSelect +=  "<span class='e-select' onClick='selectEvidence(\"" + evidence[i]["item_code"] +
- "\");' > ";
-                                eSelect += "<img class='s-image' src='images/" + evidence[i]["item_picture"] + "' >";
+			var itemName = evidence[i]["item_code"];
+			if ( fullData["ItemsEliminated"][itemName] == 0)
+			{
+                                eSelect +=  "<span class='e-select'> ";
+                                eSelect += "<img class='s-image' src='images/" + evidence[i]["item_picture"] + "'  onClick='selectEvidence(\"" + evidence[i]["item_code"] + "\");'  >";
+				eSelect += "<div class='e-select-eliminate' onClick='eliminateEvidence(\"" + itemName + "\");'>ELIMINATE</div>";
                                 eSelect += "</span>";
+			}
+			else
+			{
+                                eSelect +=  "<span class='e-select'> ";
+                                eSelect += "<img style='opacity: 0.15;' class='s-image' src='images/" + evidence[i]["item_picture"] + "'  onClick='unEliminateEvidence(\"" + itemName + "\");';'  >";
+				eSelect += "<div class='e-select-eliminate' onClick='unEliminateEvidence(\"" + itemName + "\");'>UN-ELIMINATE</div>";
+                                eSelect += "</span>";
+
+			}
                 }
 
                 if ( eSelect == "" || totalFound >= 3)
@@ -257,10 +292,15 @@
                         eSelect = "DONE";
                         $('#select-evidences').hide(500);
                 }
-                else if (eSelect == "" || totalFound ==0) 
+                else if ((eSelect == "" || totalFound ==0) && isElimFound()== 0) 
 		{
 			eSelect +='<div class="show-all-ghosts-button-container"><span class="ok-button-blue" onClick="showAllGhosts();">Toggle Ghosts Info</div>';
                         $('#select-evidences').show(200);
+		}
+		else if (  isElimFound()== 1 )
+		{
+			eSelect +='<div class="show-all-ghosts-button-container"><span class="reset-button" onClick="clearEliminated();">Clear Eliminated</div>';
+			$('#select-evidences').show(200);
 		}
 		else
                 {
@@ -302,6 +342,31 @@
                 document.getElementById('found-evidence').innerHTML = eSelect;
         }
 
+	function clearEliminated()
+	{
+                for (g = 0; g < fullData["itemsLeft"].length; g++)
+                {
+                        fullData["ItemsEliminated"][ fullData["itemsLeft"][g]["item_code"] ] = 0;
+                }
+		displayPage();
+        }
+
+
+
+
+	function isElimFound()
+	{
+		var elimFound = 0;
+		for (g = 0; g < fullData["itemsLeft"].length; g++)
+		{
+			if ( fullData["ItemsEliminated"][ fullData["itemsLeft"][g]["item_code"] ] == 1)
+			{
+				elimFound = 1;
+			}
+		}	
+		return elimFound;	
+	}		
+
 
 	// Populate the Found Ghosts panel
         function populateFoundGhosts(ghosts, totalFound)
@@ -309,35 +374,53 @@
 		var ghosts = fullData["ghosts"];
 		var totalFound = fullData["totalItemsFound"];
 		var eSelect = "";
+
+		var elimFound = isElimFound();
+
                 for (var i=0; i < ghosts.length; i++)
                 {
-                        if ( ghosts[i][5] != 0 )
+			var eliminate = 0;
+			for (var n = 0; n <  ghosts[i]["itemsRequired"].length; n++)
                         {
-                                if ( totalFound == 3 )
-                                {
-                                        eSelect +=  "<span class='g-found' > ";
-                                	eSelect += ghosts[i]["ghost_name"].toUpperCase();
-                                }
-                                else
-                                {
-                                        eSelect +=  "<span class='g-show'  > ";
-                                	eSelect += ghosts[i]["ghost_name"];
-                                }
-				eSelect += "<div class='evidence-left'>";
-				for (var n = 0; n <  ghosts[i]["itemsRequired"].length; n++)
+ 				itemCode = ghosts[i]["itemsRequired"][n]["item_code"];
+				
+				if (fullData["ItemsEliminated"][itemCode] == 1)
 				{
-					eSelect += "<span class='tiny-image-container'>";
-					eSelect += "<img class='tiny-image' src='images/" + ghosts[i]["itemsRequired"][n]["item_picture"] + "'>";
-					eSelect += "<span>";
+					eliminate = 1;
 				}
-				eSelect += "</div>";
-                                eSelect += "</span>";
 
-                                if (totalFound == 3)
-                                {
-                                        eSelect += '<div class="ghostInfo" >' + ghosts[i]["ghost_info"] + '</div>';
-                                }
-                        }
+			}
+				if ( ghosts[i][5] != 0 )
+				{
+
+					if (!eliminate)
+					{
+					if ( totalFound == 3 )
+					{
+						eSelect +=  "<span class='g-found' > ";
+						eSelect += ghosts[i]["ghost_name"].toUpperCase();
+					}
+					else
+					{
+						eSelect +=  "<span class='g-show'  > ";
+						eSelect += ghosts[i]["ghost_name"];
+					}
+					eSelect += "<div class='evidence-left'>";
+					for (var n = 0; n <  ghosts[i]["itemsRequired"].length; n++)
+					{
+						eSelect += "<span class='tiny-image-container'>";
+						eSelect += "<img class='tiny-image' src='images/" + ghosts[i]["itemsRequired"][n]["item_picture"] + "'>";
+						eSelect += "<span>";
+					}
+					eSelect += "</div>";
+					eSelect += "</span>";
+
+					if (totalFound == 3)
+					{
+						eSelect += '<div class="ghostInfo" >' + ghosts[i]["ghost_info"] + '</div>';
+					}
+				}
+			}
                 }
 
 		if ( totalFound > 0 && totalFound < 3)
@@ -352,7 +435,7 @@
 		
 		}
 
-                if ( totalFound == 0 )
+                if ( totalFound == 0 && elimFound == 0)
                 {
                         eSelect = "NONE";
                         $("#found-ghosts-list").hide(500);

@@ -80,9 +80,12 @@ exit(0);
 
 sub GETDATA
 {
-	my $data = decode_json( $params->{getData} );
-	
-	my $returner = $phasmo->getData( @{$data} );
+	my $alldata = decode_json( $params->{getData} );
+
+	my $returner = $phasmo->getData({
+		searchFor  =>  $alldata->{data},
+		eliminated => $alldata->{elim}
+	});
 	$returner->{IP} = $ENV{REMOTE_ADDR};
 
 	my $json = encode_json( $returner );

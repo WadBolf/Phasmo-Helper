@@ -190,13 +190,33 @@ body{
 	width: 245px;
 	display: inline-block;
 	margin: 10px;
+	margin-bottom: 120px;
 	cursor: pointer;
 	box-shadow: 0 0 15px #454;
+	color: #558;
+        font-weight: bold;
 }
+
+.e-select-eliminate{
+        padding: 10px 0 0 0;
+        background: #222;
+        border-radius: 8px;
+        height: 70px;
+        width: 245px;
+        display: inline-block;
+        margin: 4px 0 0 0;
+        cursor: pointer;
+        box-shadow: 0 0 15px #454;
+        color: #444;
+        font-weight: bold;
+	font-size: 40px;
+}
+
 
 .s-image{
 	height: 220px;
 	width: 240px;
+	margin-bottom: 4px;
 	border-radius: 16px;
 	background: #000;
 }

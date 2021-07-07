@@ -41,7 +41,7 @@ sub err
 
 sub getData
 {
-        my ( $self, @searchFor ) = @_;
+        my ( $self, $params ) = @_;
 
 
 	my $returner = {};
@@ -52,7 +52,8 @@ sub getData
 
 	$returner->{itemsFound} = [];
 
-	foreach my $item( @searchFor )
+
+	foreach my $item( @{$params->{searchFor}} )
 	{
 		push ( @searchForDB, "%" . $item . "%" );
 
@@ -63,10 +64,7 @@ sub getData
 		}
 	}
 
-
 	$returner->{totalItemsFound} = $totalSearchFor;
-
-	#$returner->{itemsFound} = \@searchFor;
 
 	my $q = $self->{db}->prepare(q{
 		        SELECT * FROM Ghosts WHERE items LIKE ? AND items LIKE ? AND items LIKE ? ORDER BY ghost_name ASC;
@@ -78,12 +76,13 @@ sub getData
 	}
 	while( defined ( my $row = $q->fetchrow_hashref ) )
 	{
+		$row->{Eliminated} = 0;
 		my @evidenceRequired = split("/", $row->{items});
 		my @result;
 		foreach my $e ( @evidenceRequired)
 		{
 			my $found = 0;
-			foreach my $s (@searchFor)
+			foreach my $s (@{$params->{searchFor}})
 			{
 				if ($s eq $e) {	$found = 1; }
 			}
@@ -94,7 +93,6 @@ sub getData
 		push ( @{ $returner->{ghosts} }, $row );
 	}
 
-
 	# Iterate through above results for items left to find.
 	my $q2 = $self->{db}->prepare(q{
                         SELECT * FROM Ghosts ORDER BY ghost_name ASC;
@@ -104,6 +102,7 @@ sub getData
                 $self->{err} = $DBI::errstr;
                 return undef;
         }
+
         while( defined ( my $row = $q2->fetchrow_hashref ) )
         {
                 my @evidenceRequired = split("/", $row->{items});
@@ -111,7 +110,7 @@ sub getData
                 foreach my $e ( @evidenceRequired)
                 {
                         my $found = 0;
-                        foreach my $s (@searchFor)
+                        foreach my $s (@{$params->{searchFor}})
                         {
                                 if ($s eq $e) { $found = 1; }
                         }
@@ -123,19 +122,35 @@ sub getData
         }
 
 
+	my $allEvidence = $self->getAllEvidence($self);
 
-	$q = $self->{db}->prepare(q{
-	                SELECT * FROM Evidence ORDER BY item_code ASC;
-	        });
-	if ( !defined($q) || !$q->execute() )
+	#$returner->{WOOOOOOO} = Dumper(@{$allEvidence}[0]);
+
+
+
+	my $totalTTT = scalar @{$allEvidence};
+	my @eliminated;
+
+
+	if (!$params->{eliminated})
 	{
-	        $self->{err} = $DBI::errstr;
-	        return undef;
+		foreach my $item (@{$allEvidence})
+		{
+			$returner->{ItemsEliminated}->{$item->{item_code}} = 0;
+		}
+		#for (my $i = 0; $i < scalar @{$allEvidence}; $i++)
+		#{
+		#	push (@eliminated, 0);		
+		#}
+	}
+	else
+	{
+		$returner->{ItemsEliminated} = $params->{eliminated}; 
 	}
 
 	my @allItemsLeft;
 
-	while( defined ( my $row = $q->fetchrow_hashref ) )
+	foreach my $row ( @{$allEvidence} )
 	{
 		my $found = 0;
 		foreach my $ghost  ( @{ $returner->{ghosts} } )
@@ -154,6 +169,9 @@ sub getData
 		{
 			push( @allItemsLeft, getEvidence($self, $row->{item_code}) );
 		}
+
+		
+
 	}
 	$returner->{itemsLeft} = \@allItemsLeft;
 
@@ -174,6 +192,28 @@ sub getData
         $returner->{objectives} = \@objectives;
 
 	return $returner;
+}
+
+
+sub getAllEvidence
+{
+	my ($self) = @_;
+	my $q = $self->{db}->prepare(q{
+        	SELECT * FROM Evidence ORDER BY item_code ASC;
+        });
+        if ( !defined($q) || !$q->execute() )
+        {
+                $self->{err} = $DBI::errstr;
+                return undef;
+        }
+	
+	my @allEvidence;
+	while( defined ( my $row = $q->fetchrow_hashref ) )
+        {
+		push (@allEvidence, $row);
+	}
+
+	return \@allEvidence;
 }
 
 sub getEvidence

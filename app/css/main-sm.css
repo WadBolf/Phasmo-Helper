@@ -137,7 +137,7 @@ body{
 	background: black;
 	border-radius: 8px;
 	height: 97px;
-	width: 180px;
+	width: 250px;
 	display: inline-block;
 	margin: 5px;
 	font-size: 25px;
@@ -190,8 +190,26 @@ body{
 	width: 180px;
 	display: inline-block;
 	margin: 10px;
+	margin-bottom: 35px;
 	cursor: pointer;
 	box-shadow: 0 0 15px #454;
+	color: #558;
+	font-weight: bold;
+}
+
+.e-select-eliminate{
+	padding: 0;
+        background: #222;
+        border-radius: 8px;
+        height: 26px;
+        width: 170px;
+        display: inline-block;
+        margin: 4px 0 0 0;
+        cursor: pointer;
+        box-shadow: 0 0 15px #454;
+        color: #444;
+        font-weight: bold;
+	
 }
 
 .s-image{
