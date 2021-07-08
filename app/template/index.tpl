@@ -279,9 +279,9 @@
 			}
 			else
 			{
-                                eSelect +=  "<span class='e-select'> ";
-                                eSelect += "<img style='opacity: 0.15;' class='s-image' src='images/" + evidence[i]["item_picture"] + "'  onClick='unEliminateEvidence(\"" + itemName + "\");';'  >";
-				eSelect += "<div class='e-select-eliminate' onClick='unEliminateEvidence(\"" + itemName + "\");'>UN-ELIMINATE</div>";
+                                eSelect +=  "<span style='background: #300;' class='e-select'> ";
+                                eSelect += "<img style='opacity: 0.40;' class='s-image' src='images/" + evidence[i]["item_picture"] + "'  onClick='unEliminateEvidence(\"" + itemName + "\");';'  >";
+				eSelect += "<div style='color: #844;' class='e-select-eliminate' onClick='unEliminateEvidence(\"" + itemName + "\");'>INCLUDE</div>";
                                 eSelect += "</span>";
 
 			}
