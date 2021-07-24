@@ -55,13 +55,20 @@ sub getData
 
 	foreach my $item( @{$params->{searchFor}} )
 	{
-		push ( @searchForDB, "%" . $item . "%" );
-
-		if ( $item ne "" )
+		if (defined $item)
 		{
-			$totalSearchFor ++;
-			push ( @{$returner->{itemsFound}}, getEvidence( $self, $item ) );
+			push ( @searchForDB, "%" . $item . "%" );
+			if ( $item ne "" )
+			{
+				$totalSearchFor ++;
+				push ( @{$returner->{itemsFound}}, getEvidence( $self, $item ) );
+			}
 		}
+		else
+		{
+			push ( @searchForDB, "%" );
+		}
+
 	}
 
 	$returner->{totalItemsFound} = $totalSearchFor;
@@ -84,7 +91,10 @@ sub getData
 			my $found = 0;
 			foreach my $s (@{$params->{searchFor}})
 			{
-				if ($s eq $e) {	$found = 1; }
+				if (defined $s)
+				{
+					if ($s eq $e) {	$found = 1; }
+				}
 			}
 
 			if (!$found) { push (@result, getEvidence($self, $e) ); }
@@ -112,7 +122,10 @@ sub getData
                         my $found = 0;
                         foreach my $s (@{$params->{searchFor}})
                         {
-                                if ($s eq $e) { $found = 1; }
+				if (defined $s)
+				{
+                                	if ($s eq $e) { $found = 1; }
+				}
                         }
 
                         if (!$found) { push (@result, getEvidence($self, $e) ); }
